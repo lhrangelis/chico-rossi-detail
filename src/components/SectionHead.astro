@@ -1,0 +1,25 @@
+---
+interface Props {
+  id: string;
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  size?: 'lg' | 'md';
+}
+
+const { id, eyebrow, title, lead, size = 'lg' } = Astro.props;
+---
+
+<div class="section-head">
+  <div class="section-head__titles">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2 id={id} class:list={['display', 'h2', { 'h2--md': size === 'md' }]}>{title}</h2>
+  </div>
+  {lead && <p class="section-head__lead">{lead}</p>}
+</div>
+
+<style>
+  .h2--md {
+    font-size: clamp(42px, 5vw, 64px);
+  }
+</style>

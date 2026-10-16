@@ -1,0 +1,110 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import Icon from './Icon.astro';
+import { site, wa } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div class="footer__brand">
+      <Image src={logo} alt="" width={44} height={44} densities={[1, 2]} class="footer__logo" />
+      <div class="footer__text">
+        <p class="footer__name">{site.name}</p>
+        <p class="footer__copy">© {year} {site.name}. Todos os direitos reservados.</p>
+      </div>
+    </div>
+    <ul class="footer__social" aria-label="Redes sociais">
+      <li>
+        <a class="social" href={wa()}>
+          <Icon name="whatsapp" />
+          <span class="sr-only">WhatsApp</span>
+        </a>
+      </li>
+      <li>
+        <a class="social" href={site.instagram.url} rel="noopener">
+          <Icon name="instagram" />
+          <span class="sr-only">Instagram</span>
+        </a>
+      </li>
+      <li>
+        <a class="social" href={site.facebook.url} rel="noopener">
+          <Icon name="facebook" />
+          <span class="sr-only">Facebook</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--line);
+    padding: 48px 0 56px;
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .footer__brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .footer__logo {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  .footer__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.4;
+  }
+
+  .footer__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .footer__copy {
+    font-size: 13px;
+    color: var(--text-faint);
+  }
+
+  .footer__social {
+    display: flex;
+    gap: 12px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .social {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--line-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-2);
+  }
+
+  .social:hover {
+    border-color: var(--line-hover);
+    color: #fff;
+  }
+</style>

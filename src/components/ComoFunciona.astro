@@ -1,0 +1,84 @@
+---
+import { steps } from '../data/services';
+---
+
+<section class="section como" aria-labelledby="como-title">
+  <div class="wrap section-stack">
+    <div class="section-head__titles">
+      <p class="eyebrow">Como funciona</p>
+      <h2 id="como-title" class="display h2 como__title">Do primeiro contato à entrega</h2>
+    </div>
+    <ol class="steps">
+      {
+        steps.map((s, i) => (
+          <li class:list={['step', { 'step--last': i === steps.length - 1 }]}>
+            <span class="step__num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="step__title">{s.title}</h3>
+            <p class="step__text">{s.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .como {
+    padding: 112px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .como__title {
+    font-size: clamp(42px, 5vw, 64px);
+  }
+
+  .steps {
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+    gap: 40px 32px;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line-3);
+  }
+
+  .step__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 1;
+    color: #2e3338;
+  }
+
+  .step--last {
+    border-top-color: var(--accent);
+  }
+
+  .step--last .step__num {
+    color: var(--accent);
+  }
+
+  .step__title {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .step__text {
+    color: var(--text-body);
+  }
+
+  @media (max-width: 900px) {
+    .como {
+      padding: 88px 0;
+    }
+  }
+</style>

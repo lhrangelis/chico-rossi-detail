@@ -1,0 +1,18 @@
+---
+import { wa, quoteMessage } from '../data/site';
+
+interface Props {
+  /** Assunto da mensagem ("orçamento de …"). */
+  subject: string;
+  /** Texto lido por leitores de tela para diferenciar os vários botões iguais. */
+  context: string;
+  label?: string;
+  message?: string;
+}
+
+const { subject, context, label = 'Pedir orçamento', message } = Astro.props;
+---
+
+<a class="quote" href={wa(message ?? quoteMessage(subject))}>
+  {label}<span class="sr-only"> — {context}</span>
+</a>

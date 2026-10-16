@@ -1,0 +1,187 @@
+---
+import QuoteLink from './QuoteLink.astro';
+import SectionHead from './SectionHead.astro';
+import { categories } from '../data/services';
+---
+
+<section id="servicos" class="section section--alt servicos" aria-labelledby="servicos-title">
+  <div class="wrap servicos__stack">
+    <SectionHead
+      id="servicos-title"
+      eyebrow="Serviços"
+      title="Tudo o que o seu carro precisa, em um só lugar"
+      lead="Cada serviço é indicado depois de avaliar o estado real do veículo. Peça seu orçamento pelo WhatsApp."
+    />
+
+    <nav aria-label="Categorias de serviço">
+      <ul class="chips">
+        {
+          categories.map((c) => (
+            <li>
+              <a class="chip" href={`#${c.id}`}>
+                {c.chip}
+              </a>
+            </li>
+          ))
+        }
+        <li><a class="chip" href="#insulfilm">Insulfilm</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      {
+        categories.map((c, i) => (
+          <section id={c.id} class="cat" aria-labelledby={`${c.id}-title`}>
+            <div class="cat__head">
+              <span class="cat__num" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 class="cat__title" id={`${c.id}-title`}>
+                {c.title}
+              </h3>
+              <p class="cat__intro" set:html={c.intro} />
+            </div>
+            <ul class="cat__items">
+              {c.items.map((item) => (
+                <li class="item">
+                  <div class="item__body">
+                    <h4 class="item__name">{item.name}</h4>
+                    {item.description && <p class="item__desc">{item.description}</p>}
+                    {item.tags && (
+                      <ul class="tags" aria-label={item.description ? 'Detalhes' : 'Serviços incluídos'}>
+                        {item.tags.map((t) => (
+                          <li class="tag">{t}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                  <QuoteLink subject={item.subject} context={item.name} label={item.cta} message={item.message} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .servicos {
+    padding: 120px 0 88px;
+  }
+
+  .servicos__stack {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cat {
+    display: grid;
+    grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+    gap: 28px 72px;
+    padding: 64px 0;
+    border-top: 1px solid var(--line-3);
+  }
+
+  .cat__head {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .cat__num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+
+  .cat__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 0.95;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .cat__intro {
+    color: var(--text-body);
+    font-size: 16px;
+    text-wrap: pretty;
+  }
+
+  .cat__items {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px 40px;
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .item:first-child {
+    border-top: 0;
+    padding-top: 4px;
+  }
+
+  .item__body {
+    flex: 1 1 400px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .item__name {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .item__desc {
+    color: var(--text-body);
+    font-size: 15.5px;
+    line-height: 1.6;
+    max-width: 640px;
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 900px) {
+    .servicos {
+      padding: 96px 0 64px;
+    }
+
+    .cat {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
+      padding: 48px 0;
+    }
+
+    .item__body {
+      flex-basis: 100%;
+    }
+  }
+</style>

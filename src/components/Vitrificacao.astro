@@ -1,0 +1,107 @@
+---
+import Icon from './Icon.astro';
+import QuoteLink from './QuoteLink.astro';
+import SectionHead from './SectionHead.astro';
+import { stages, includedInAllStages } from '../data/services';
+---
+
+<section id="vitrificacao" class="section" aria-labelledby="vitrificacao-title">
+  <div class="wrap section-stack">
+    <SectionHead
+      id="vitrificacao-title"
+      eyebrow="Vitrificação de pintura"
+      title="Quatro níveis de proteção. Até 36 meses de brilho."
+      lead="Todos os níveis começam com polimento técnico e correção completa da pintura. O que muda é o coat aplicado sobre ela."
+    />
+
+    <ul class="grid-cards plain-list">
+      {
+        stages.map((s) => (
+          <li>
+            <article class:list={['stage', { 'stage--featured': s.highlight }]} aria-labelledby={`stage-${s.stage.slice(-2)}`}>
+              <div class="stage__top">
+                <p class="stage__label">{s.stage}</p>
+                {s.highlight && <p class="badge">{s.highlight}</p>}
+              </div>
+              <h3 class="stage__title" id={`stage-${s.stage.slice(-2)}`}>{s.name}</h3>
+              <ul class="tags" aria-label="Características">
+                {s.tags.map((t) => <li class="tag">{t}</li>)}
+              </ul>
+              <p class="stage__desc">{s.description}</p>
+              <QuoteLink subject={`Vitrificação ${s.stage}`} context={`${s.stage}, ${s.name}`} />
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="included">
+      <h3 class="included__title">Incluso em todos os níveis</h3>
+      <ul class="included__list">
+        {
+          includedInAllStages.map((i) => (
+            <li class="check">
+              <Icon name="check" size={18} strokeWidth={2.4} />
+              <span>{i}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .plain-list {
+    padding: 0;
+    list-style: none;
+  }
+
+  .plain-list > li {
+    display: flex;
+    min-width: 0;
+  }
+
+  .plain-list > li > .stage {
+    flex: 1;
+  }
+
+  .stage__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .included {
+    background: var(--bg-alt);
+    border: 1px solid var(--line-2);
+    border-radius: 24px;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .included__title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-2);
+  }
+
+  .included__list {
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    gap: 16px 32px;
+  }
+
+  @media (max-width: 480px) {
+    .included {
+      padding: 28px 22px;
+    }
+  }
+</style>

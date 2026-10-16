@@ -1,0 +1,51 @@
+---
+import QuoteLink from './QuoteLink.astro';
+import SectionHead from './SectionHead.astro';
+import { films } from '../data/services';
+---
+
+<section id="insulfilm" class="section" aria-labelledby="insulfilm-title">
+  <div class="wrap section-stack">
+    <SectionHead
+      id="insulfilm-title"
+      eyebrow="Insulfilm"
+      title="Três linhas de película. Uma para cada necessidade."
+      lead="Ajudamos você a escolher a película pelo uso do carro, pelo nível de privacidade desejado e pelo orçamento."
+      size="md"
+    />
+
+    <ul class="grid-cards grid-cards--wide films">
+      {
+        films.map((f) => (
+          <li>
+            <article class="stage">
+              <h3 class="stage__title film__title">{f.name}</h3>
+              <p class="stage__desc">{f.description}</p>
+              <QuoteLink subject={f.subject} context={`película ${f.name}`} />
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .films {
+    padding: 0;
+    list-style: none;
+  }
+
+  .films > li {
+    display: flex;
+    min-width: 0;
+  }
+
+  .films .stage {
+    flex: 1;
+  }
+
+  .film__title {
+    font-size: 34px;
+  }
+</style>

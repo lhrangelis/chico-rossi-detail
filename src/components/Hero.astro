@@ -1,0 +1,243 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import Icon from './Icon.astro';
+import { site, wa, quoteMessage } from '../data/site';
+---
+
+<section id="inicio" class="hero" aria-labelledby="hero-title">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <p class="hero__kicker">
+        <span class="hero__dot" aria-hidden="true"></span>
+        <span>Estética automotiva</span>
+      </p>
+      <h1 id="hero-title" class="display hero__title">
+        Cuidado automotivo levado ao <span class="hero__accent">detalhe.</span>
+      </h1>
+      <p class="hero__lead">
+        Lavagem, polimento, vitrificação, higienização, vidros e insulfilm, com produtos japoneses e aplicação
+        credenciada.
+      </p>
+      <div class="hero__ctas">
+        <a class="btn-p" href={wa(quoteMessage())}>
+          <Icon name="whatsapp" />
+          <span>Pedir orçamento no WhatsApp</span>
+        </a>
+        <a class="btn-s" href="#servicos">Ver todos os serviços</a>
+      </div>
+      <div class="hero__meta">
+        <p class="hero__status" data-status hidden>
+          <span class="status-dot" data-status-dot aria-hidden="true"></span>
+          <span><strong data-status-title></strong> · <span data-status-detail></span></span>
+        </p>
+        <a class="hero__phone" href={`tel:${site.phone.e164}`}>
+          <Icon name="phone" size={16} />
+          <span><span class="sr-only">Telefone: </span>{site.phone.display}</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__visual">
+      <div class="hero__logo-ring">
+        <Image
+          src={logo}
+          alt="Logotipo Chico Rossi Car Detailing"
+          widths={[320, 404, 640, 760]}
+          sizes="(max-width: 480px) calc(100vw - 76px), 404px"
+          class="hero__logo"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+      <ul class="hero__badges" aria-label="Credenciamentos">
+        <li>
+          <Icon name="check" size={16} strokeWidth={2.4} />
+          <span>Aplicador credenciado Soft99</span>
+        </li>
+        <li>
+          <Icon name="check" size={16} strokeWidth={2.4} />
+          <span>Aplicador credenciado G’zox</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 96px 0 104px;
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 72px;
+    align-items: center;
+  }
+
+  .hero__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    min-width: 0;
+  }
+
+  .hero__kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .hero__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .hero__title {
+    font-size: clamp(56px, 7.4vw, 108px);
+    line-height: 0.9;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  .hero__accent {
+    color: var(--accent);
+  }
+
+  .hero__lead {
+    max-width: 560px;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    text-wrap: pretty;
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 28px;
+    padding-top: 8px;
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+
+  .hero__status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero__status[hidden] {
+    display: none;
+  }
+
+  .hero__status strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .hero__phone {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+    min-height: 44px;
+  }
+
+  .hero__phone :global(svg) {
+    color: var(--text-dim);
+  }
+
+  .hero__phone:hover {
+    color: #fff;
+  }
+
+  .hero__visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    min-width: 0;
+  }
+
+  .hero__logo-ring {
+    width: min(440px, 100%);
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    padding: 18px;
+    border: 1px solid var(--line-2);
+    background: var(--bg-alt);
+  }
+
+  .hero__logo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  .hero__badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hero__badges li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line-3);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-2);
+  }
+
+  .hero__badges :global(svg) {
+    color: var(--accent);
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      padding: 64px 0 80px;
+    }
+
+    .hero__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 56px;
+    }
+
+    .hero__logo-ring {
+      width: min(340px, 100%);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero__title {
+      font-size: clamp(46px, 13vw, 56px);
+    }
+
+    .hero__lead {
+      font-size: 17px;
+    }
+  }
+</style>

@@ -1,0 +1,103 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import Icon from './Icon.astro';
+import { wa, quoteMessage } from '../data/site';
+---
+
+<section class="cta" aria-labelledby="cta-title">
+  <div class="wrap">
+    <div class="cta__box">
+      <div class="cta__copy">
+        <h2 id="cta-title" class="display cta__title">Seu carro merece esse cuidado.</h2>
+        <p class="cta__text">
+          Mande uma mensagem com o modelo do veículo e o serviço desejado. Respondemos com o orçamento e os próximos
+          horários disponíveis.
+        </p>
+        <div class="cta__actions">
+          <a class="btn-p" href={wa(quoteMessage())}>
+            <Icon name="whatsapp" />
+            <span>Pedir orçamento no WhatsApp</span>
+          </a>
+        </div>
+      </div>
+      <Image src={logo} alt="" widths={[180, 280, 560]} sizes="(max-width: 900px) 180px, 280px" class="cta__logo" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding: 120px 0;
+  }
+
+  .cta__box {
+    position: relative;
+    overflow: hidden;
+    border-radius: 32px;
+    border: 1px solid var(--line-2);
+    background: var(--surface-3);
+    padding: clamp(32px, 6vw, 80px);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .cta__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    max-width: 640px;
+    min-width: 0;
+  }
+
+  .cta__title {
+    font-size: clamp(44px, 5.4vw, 76px);
+    line-height: 0.92;
+    text-wrap: balance;
+  }
+
+  .cta__text {
+    color: var(--text-body);
+    font-size: 18px;
+    max-width: 480px;
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding-top: 6px;
+  }
+
+  .cta__logo {
+    width: clamp(180px, 22vw, 280px);
+    height: auto;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .cta {
+      padding: 88px 0;
+    }
+
+    .cta__logo {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cta__box {
+      border-radius: 24px;
+      padding: 32px 22px;
+    }
+
+    .cta__text {
+      font-size: 17px;
+    }
+  }
+</style>

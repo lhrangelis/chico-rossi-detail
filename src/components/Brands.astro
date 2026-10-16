@@ -1,0 +1,57 @@
+---
+import { brands } from '../data/site';
+---
+
+<div class="brands">
+  <div class="wrap brands__inner">
+    <h2 class="brands__label" id="marcas-title">Produtos e equipamentos</h2>
+    <ul class="brands__list" aria-labelledby="marcas-title">
+      {brands.map((b) => <li>{b}</li>)}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .brands {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 28px 0;
+  }
+
+  .brands__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 40px;
+  }
+
+  .brands__label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .brands__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 36px;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  @media (max-width: 480px) {
+    .brands__list {
+      gap: 8px 24px;
+      font-size: 21px;
+    }
+  }
+</style>

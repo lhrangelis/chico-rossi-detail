@@ -1,0 +1,381 @@
+---
+import Icon from './Icon.astro';
+import { site, hours, wa, mapsEmbedUrl, mapsLinkUrl, mapsDirectionsUrl } from '../data/site';
+---
+
+<section id="contato" class="section section--alt contato" aria-labelledby="contato-title">
+  <div class="wrap section-stack">
+    <div class="section-head__titles">
+      <p class="eyebrow">Visite-nos</p>
+      <h2 id="contato-title" class="display h2 contato__title">Horários e contato</h2>
+    </div>
+
+    <div class="split">
+      <div class="card hours">
+        <div class="hours__head">
+          <h3 class="hours__title">
+            <Icon name="clock" />
+            <span>Horário de funcionamento</span>
+          </h3>
+          <p class="hours__status" data-status hidden>
+            <span class="status-dot" data-status-dot aria-hidden="true"></span>
+            <span data-status-title></span>
+          </p>
+        </div>
+        <ul class="hours__list">
+          {
+            hours.map((h) => (
+              <li class:list={['hours__row', { 'is-closed': !h.open }]} data-day={h.day}>
+                <span class="hours__day">
+                  <span>{h.label}</span>
+                  <span class="badge" data-today-badge hidden>
+                    Hoje
+                  </span>
+                </span>
+                <span class="hours__time">
+                  {h.open ? (
+                    <>
+                      {h.open}
+                      <span aria-hidden="true"> – </span>
+                      <span class="sr-only"> às </span>
+                      {h.close}
+                    </>
+                  ) : (
+                    'Fechado'
+                  )}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="contato__side">
+        <ul class="card links">
+          <li>
+            <a class="link-row" href={wa()}>
+              <span class="link-row__icon link-row__icon--accent"><Icon name="whatsapp" size={22} /></span>
+              <span class="link-row__text">
+                <span class="link-row__label">WhatsApp e telefone</span>
+                <span class="link-row__value">{site.phone.display}</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="link-row" href={site.instagram.url} rel="noopener">
+              <span class="link-row__icon"><Icon name="instagram" size={22} /></span>
+              <span class="link-row__text">
+                <span class="link-row__label">Instagram</span>
+                <span class="link-row__value">{site.instagram.handle}</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="link-row" href={site.facebook.url} rel="noopener">
+              <span class="link-row__icon"><Icon name="facebook" size={22} /></span>
+              <span class="link-row__text">
+                <span class="link-row__label">Facebook</span>
+                <span class="link-row__value">{site.facebook.name}</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <div class="link-row">
+              <span class="link-row__icon"><Icon name="pin" size={22} /></span>
+              <span class="link-row__text">
+                <span class="link-row__label">Endereço</span>
+                <address class="link-row__value">
+                  {site.address.street}<br />
+                  {site.address.district}, {site.address.city}/{site.address.state} · CEP {site.address.zip}
+                </address>
+              </span>
+            </div>
+          </li>
+        </ul>
+
+        <div class="map">
+          <iframe
+            src={mapsEmbedUrl}
+            title={`Mapa com a localização da ${site.name}: ${site.address.street}, ${site.address.city}/${site.address.state}`}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+
+        <div class="map-actions">
+          <a class="btn-p map-btn" href={mapsDirectionsUrl} rel="noopener">
+            <Icon name="route" />
+            <span>Como chegar</span>
+          </a>
+          <a class="btn-s map-btn" href={mapsLinkUrl} rel="noopener">
+            <Icon name="pin" />
+            <span>Ver no Google Maps</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { renderOpeningStatus } from '../scripts/opening-status';
+
+  renderOpeningStatus();
+  // Atualiza a cada minuto para manter "Aberto/Fechado agora" correto.
+  setInterval(renderOpeningStatus, 60_000);
+</script>
+
+<style>
+  .contato {
+    padding: 120px 0;
+  }
+
+  .contato__title {
+    font-size: clamp(42px, 5vw, 64px);
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 64px;
+    align-items: start;
+  }
+
+  .hours {
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+  }
+
+  .hours__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hours__title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .hours__title :global(svg) {
+    color: var(--text-dim);
+  }
+
+  .hours__status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line-3);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-2);
+  }
+
+  .hours__status[hidden] {
+    display: none;
+  }
+
+  .hours__status .status-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .hours__list {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hours__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 16px;
+    color: var(--text-muted);
+  }
+
+  .hours__row.is-closed {
+    color: var(--text-off);
+  }
+
+  .hours__row.is-today {
+    background: var(--today);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .hours__day {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hours__day .badge {
+    padding: 3px 8px;
+  }
+
+  .hours__day .badge[hidden] {
+    display: none;
+  }
+
+  .hours__time {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .contato__side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+  }
+
+  .links {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+    list-style: none;
+  }
+
+  .links > li + li {
+    border-top: 1px solid var(--line);
+  }
+
+  .link-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 24px 28px;
+  }
+
+  a.link-row:hover .link-row__value {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  a.link-row:focus-visible {
+    outline-offset: -3px;
+    border-radius: 0;
+  }
+
+  .link-row__icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-2);
+  }
+
+  .link-row__icon--accent {
+    color: var(--accent);
+  }
+
+  .link-row__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.35;
+    min-width: 0;
+  }
+
+  .link-row__label {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .link-row__value {
+    font-size: 18px;
+    font-weight: 600;
+    font-style: normal;
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+
+  address.link-row__value {
+    font-size: 17px;
+    line-height: 1.45;
+  }
+
+  .map {
+    height: 320px;
+    border-radius: 24px;
+    border: 1px solid var(--line-2);
+    overflow: hidden;
+    background-color: var(--surface);
+  }
+
+  .map iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    filter: grayscale(0.35) contrast(1.05);
+  }
+
+  .map-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .map-btn {
+    flex: 1 1 200px;
+    justify-content: center;
+    height: 54px;
+  }
+
+  @media (max-width: 900px) {
+    .contato {
+      padding: 96px 0;
+    }
+
+    .split {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hours {
+      padding: 26px 18px;
+    }
+
+    .hours__row {
+      padding: 12px 10px;
+      font-size: 15px;
+    }
+
+    .link-row {
+      padding: 20px;
+      gap: 14px;
+    }
+
+    .link-row__value {
+      font-size: 17px;
+    }
+
+    .map {
+      height: 300px;
+    }
+  }
+</style>
